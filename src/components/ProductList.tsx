@@ -467,7 +467,7 @@ export default function ProductList() {
                                                 draggableId={`variant-${variant.id}`}
                                                 index={index}
                                               >
-                                                {(provided, snapshot) => (
+                                                {(provided) => (
                                                   <div
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}

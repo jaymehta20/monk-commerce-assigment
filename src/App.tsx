@@ -1,15 +1,15 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ThemeProvider, useTheme } from 'next-themes';
-import ProductList from './components/ProductList';
-import Logo from '../public/logo.svg';
-import { Sun, Moon, Laptop, ChevronDown } from 'lucide-react';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDown, Laptop, Moon, Sun } from 'lucide-react';
+import { ThemeProvider, useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
+import Logo from '../public/logo.svg';
+import ProductList from './components/ProductList';
 
 const ThemeToggle = () => {
   const [mounted, setMounted] = useState(false);
