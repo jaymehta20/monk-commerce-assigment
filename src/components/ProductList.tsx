@@ -24,6 +24,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, ChevronUp, Pencil, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from './ui/tooltip';
 
 interface Variant {
   id: number;
@@ -290,7 +296,7 @@ export default function ProductList() {
   };
 
   return (
-    <Card className="space-y-6 max-w-5xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl">
+    <Card className="space-y-6 mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl">
       <CardHeader>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
@@ -304,12 +310,12 @@ export default function ProductList() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-gradient-to-r from-[#f3f3f3] to-[#e6e6e6] dark:from-gray-700 dark:to-gray-600 p-4 rounded-md shadow-sm"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-gradient-to-r from-[#f0f7f4] to-[#e3f1ec] dark:from-[#1a3c34] dark:to-[#0d2620] p-4 rounded-md shadow-sm"
         >
-          <p className="font-semibold text-gray-700 dark:text-gray-300">
+          <p className="font-semibold text-[#008060] dark:text-[#00a67d]">
             Product
           </p>
-          <p className="font-semibold text-gray-700 dark:text-gray-300">
+          <p className="font-semibold text-[#008060] dark:text-[#00a67d]">
             Discount
           </p>
         </motion.div>
@@ -599,12 +605,12 @@ export default function ProductList() {
           </Droppable>
         </DragDropContext>
       </CardContent>
-      <CardFooter className="flex justify-end max-w-5xl mt-8">
+      <CardFooter className="flex justify-end mt-8">
         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Button
             onClick={() => setShowProductModal(true)}
             variant="outline"
-            className="border-2 border-[#008060] text-[#008060] hover:bg-[#e6f3f0] hover:text-[#00533f] dark:border-[#00a67d] dark:text-[#00a67d] dark:hover:bg-[#004d3d] dark:hover:text-[#00c795] rounded-md px-4 sm:px-6 py-2 text-sm font-medium transition-colors duration-200"
+            className="border-2 border-[#008060] text-[#008060] hover:bg-[#e6f3f0] hover:text-[#00533f] dark:border-[#00a67d] dark:text-[#00a67d] dark:hover:bg-[#004d3d] dark:hover:text-[#00c795] rounded-md px-2 sm:px-20 py-2 text-sm font-medium transition-colors duration-200"
           >
             Add Product
           </Button>
@@ -639,20 +645,35 @@ export default function ProductList() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.2 }}
-                      className="py-2 sm:py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
+                      className="p-2 sm:p-3 rounded-md border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
                     >
                       <div className="flex items-center space-x-2 sm:space-x-4">
-                        <Checkbox
-                          id={`product-${product.id}`}
-                          checked={
-                            !!selectedItems[product.id] ||
-                            isProductAdded(product.id)
-                          }
-                          onCheckedChange={() =>
-                            toggleProductSelection(product)
-                          }
-                          disabled={isProductAdded(product.id)}
-                        />
+                        {isProductAdded(product.id) ? (
+                          <TooltipProvider delayDuration={0}>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <div>
+                                  <Checkbox
+                                    id={`product-${product.id}`}
+                                    checked={true}
+                                    disabled={true}
+                                  />
+                                </div>
+                              </TooltipTrigger>
+                              <TooltipContent side="top" sideOffset={5}>
+                                <p>Product already added</p>
+                              </TooltipContent>
+                            </Tooltip>
+                          </TooltipProvider>
+                        ) : (
+                          <Checkbox
+                            id={`product-${product.id}`}
+                            checked={!!selectedItems[product.id]}
+                            onCheckedChange={() =>
+                              toggleProductSelection(product)
+                            }
+                          />
+                        )}
                         <img
                           src={product.image.src}
                           alt={product.title}
@@ -672,21 +693,37 @@ export default function ProductList() {
                               key={variant.id}
                               className="flex items-center space-x-2"
                             >
-                              <Checkbox
-                                id={`variant-${variant.id}`}
-                                checked={
-                                  selectedItems[product.id]?.includes(
+                              {isVariantAdded(product.id, variant.id) ? (
+                                <TooltipProvider delayDuration={0}>
+                                  <Tooltip>
+                                    <TooltipTrigger asChild>
+                                      <div>
+                                        <Checkbox
+                                          id={`variant-${variant.id}`}
+                                          checked={true}
+                                          disabled={true}
+                                        />
+                                      </div>
+                                    </TooltipTrigger>
+                                    <TooltipContent side="top" sideOffset={5}>
+                                      <p>Variant already added</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </TooltipProvider>
+                              ) : (
+                                <Checkbox
+                                  id={`variant-${variant.id}`}
+                                  checked={selectedItems[product.id]?.includes(
                                     variant.id
-                                  ) || isVariantAdded(product.id, variant.id)
-                                }
-                                onCheckedChange={() =>
-                                  toggleVariantSelection(product.id, variant.id)
-                                }
-                                disabled={isVariantAdded(
-                                  product.id,
-                                  variant.id
-                                )}
-                              />
+                                  )}
+                                  onCheckedChange={() =>
+                                    toggleVariantSelection(
+                                      product.id,
+                                      variant.id
+                                    )
+                                  }
+                                />
+                              )}
                               <label
                                 htmlFor={`variant-${variant.id}`}
                                 className="text-xs sm:text-sm leading-none cursor-pointer hover:text-[#008060] dark:hover:text-[#00a67d] transition-colors duration-200"
