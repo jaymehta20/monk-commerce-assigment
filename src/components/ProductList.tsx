@@ -290,13 +290,13 @@ export default function ProductList() {
   };
 
   return (
-    <Card className="space-y-6 max-w-5xl mx-auto bg-white rounded-lg shadow-xl">
+    <Card className="space-y-6 max-w-5xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl">
       <CardHeader>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold mb-8 text-gray-800 bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent"
+          className="text-4xl font-bold mb-8 text-gray-800 dark:text-gray-200 bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent"
         >
           Add Products
         </motion.h1>
@@ -304,10 +304,14 @@ export default function ProductList() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-2 gap-4 mb-6 bg-gradient-to-r from-[#f3f3f3] to-[#e6e6e6] p-4 rounded-md shadow-sm"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6 bg-gradient-to-r from-[#f3f3f3] to-[#e6e6e6] dark:from-gray-700 dark:to-gray-600 p-4 rounded-md shadow-sm"
         >
-          <p className="font-semibold text-gray-700">Product</p>
-          <p className="font-semibold text-gray-700">Discount</p>
+          <p className="font-semibold text-gray-700 dark:text-gray-300">
+            Product
+          </p>
+          <p className="font-semibold text-gray-700 dark:text-gray-300">
+            Discount
+          </p>
         </motion.div>
       </CardHeader>
       <CardContent>
@@ -338,13 +342,13 @@ export default function ProductList() {
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.3 }}
                           >
-                            <Card className="p-6 hover:shadow-lg transition-all duration-300 bg-gradient-to-r from-white to-gray-50">
-                              <div className="grid grid-cols-2 gap-6 items-center">
-                                <div className="flex items-center gap-4">
-                                  <span className="text-gray-400 cursor-move">
+                            <Card className="p-4 sm:p-6 hover:shadow-lg transition-all duration-300 bg-gradient-to-r from-white to-gray-50 dark:from-gray-800 dark:to-gray-700">
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 items-center">
+                                <div className="flex items-center gap-2 sm:gap-4">
+                                  <span className="text-gray-400 dark:text-gray-500 cursor-move">
                                     ::
                                   </span>
-                                  <span className="font-medium text-gray-600">
+                                  <span className="font-medium text-gray-600 dark:text-gray-300">
                                     {index + 1}.
                                   </span>
                                   <Input
@@ -356,17 +360,18 @@ export default function ProductList() {
                                         e.target.value
                                       )
                                     }
-                                    className="flex-grow border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300"
+                                    className="flex-grow border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300"
                                   />
                                   <Button
                                     variant="ghost"
                                     size="icon"
-                                    className="hover:bg-[#e6f3f0] text-[#008060]"
+                                    className="hover:bg-[#e6f3f0] dark:hover:bg-[#004d3d] text-[#008060] dark:text-[#00a67d]"
+                                    onClick={() => setShowProductModal(true)}
                                   >
                                     <Pencil className="h-4 w-4" />
                                   </Button>
                                 </div>
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-2 sm:gap-4">
                                   <Input
                                     type="number"
                                     value={product.discount}
@@ -377,7 +382,7 @@ export default function ProductList() {
                                         Number(e.target.value)
                                       )
                                     }
-                                    className="w-24 border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300"
+                                    className="w-20 sm:w-24 border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300"
                                   />
                                   <Select
                                     value={product.discountType}
@@ -389,7 +394,7 @@ export default function ProductList() {
                                       )
                                     }
                                   >
-                                    <SelectTrigger className="w-[120px] bg-transparent border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300">
+                                    <SelectTrigger className="w-[100px] sm:w-[120px] bg-transparent border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300">
                                       <SelectValue placeholder="Discount type" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -403,7 +408,7 @@ export default function ProductList() {
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => removeProduct(product.id)}
-                                    className="hover:bg-red-100 hover:text-red-600 transition-colors duration-300"
+                                    className="hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900 dark:hover:text-red-400 transition-colors duration-300"
                                   >
                                     <X className="h-4 w-4" />
                                   </Button>
@@ -414,7 +419,7 @@ export default function ProductList() {
                                   <Button
                                     variant="link"
                                     onClick={() => toggleVariants(product.id)}
-                                    className="text-[#008060] p-0 hover:text-[#00533f] transition-colors duration-300"
+                                    className="text-[#008060] dark:text-[#00a67d] p-0 hover:text-[#00533f] dark:hover:text-[#00c795] transition-colors duration-300"
                                   >
                                     {showVariants[product.id] ? (
                                       <>
@@ -482,87 +487,91 @@ export default function ProductList() {
                                                       transition={{
                                                         duration: 0.2,
                                                       }}
-                                                      className="bg-gradient-to-r from-gray-50 to-white border border-gray-200 rounded-md p-4 hover:shadow-md transition-all duration-300"
+                                                      className="bg-gradient-to-r from-gray-50 to-white dark:from-gray-700 dark:to-gray-600 border border-gray-200 dark:border-gray-600 rounded-md p-3 sm:p-4 hover:shadow-md transition-all duration-300"
                                                     >
-                                                      <div className="flex items-center space-x-4">
-                                                        <div className="cursor-move">
-                                                          <span className="text-gray-400">
-                                                            ::
-                                                          </span>
-                                                        </div>
-                                                        <Input
-                                                          value={variant.title}
-                                                          onChange={(e) =>
-                                                            updateVariant(
-                                                              product.id,
-                                                              variant.id,
-                                                              'title',
-                                                              e.target.value
-                                                            )
-                                                          }
-                                                          className="flex-grow border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300"
-                                                        />
-                                                      </div>
-                                                      <div className="flex items-center gap-4 mt-4">
-                                                        <Input
-                                                          type="number"
-                                                          value={
-                                                            variant.discount
-                                                          }
-                                                          onChange={(e) =>
-                                                            updateVariant(
-                                                              product.id,
-                                                              variant.id,
-                                                              'discount',
-                                                              Number(
+                                                      <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+                                                        <div className="flex items-center space-x-2 sm:space-x-4">
+                                                          <div className="cursor-move">
+                                                            <span className="text-gray-400 dark:text-gray-500">
+                                                              ::
+                                                            </span>
+                                                          </div>
+                                                          <Input
+                                                            value={
+                                                              variant.title
+                                                            }
+                                                            onChange={(e) =>
+                                                              updateVariant(
+                                                                product.id,
+                                                                variant.id,
+                                                                'title',
                                                                 e.target.value
                                                               )
-                                                            )
-                                                          }
-                                                          className="w-24 border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300"
-                                                        />
-                                                        <Select
-                                                          value={
-                                                            variant.discountType
-                                                          }
-                                                          onValueChange={(
-                                                            value:
-                                                              | 'Flat'
-                                                              | '% Off'
-                                                          ) =>
-                                                            updateVariant(
-                                                              product.id,
-                                                              variant.id,
-                                                              'discountType',
-                                                              value
-                                                            )
-                                                          }
-                                                        >
-                                                          <SelectTrigger className="w-[120px] bg-transparent border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300">
-                                                            <SelectValue placeholder="Discount type" />
-                                                          </SelectTrigger>
-                                                          <SelectContent>
-                                                            <SelectItem value="Flat">
-                                                              Flat
-                                                            </SelectItem>
-                                                            <SelectItem value="% Off">
-                                                              % Off
-                                                            </SelectItem>
-                                                          </SelectContent>
-                                                        </Select>
-                                                        <Button
-                                                          variant="ghost"
-                                                          size="icon"
-                                                          onClick={() =>
-                                                            removeVariant(
-                                                              product.id,
-                                                              variant.id
-                                                            )
-                                                          }
-                                                          className="hover:bg-red-100 hover:text-red-600 transition-colors duration-300"
-                                                        >
-                                                          <X className="h-4 w-4" />
-                                                        </Button>
+                                                            }
+                                                            className="flex-grow border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300"
+                                                          />
+                                                        </div>
+                                                        <div className="flex items-center gap-2 sm:gap-4">
+                                                          <Input
+                                                            type="number"
+                                                            value={
+                                                              variant.discount
+                                                            }
+                                                            onChange={(e) =>
+                                                              updateVariant(
+                                                                product.id,
+                                                                variant.id,
+                                                                'discount',
+                                                                Number(
+                                                                  e.target.value
+                                                                )
+                                                              )
+                                                            }
+                                                            className="w-20 sm:w-24 border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300"
+                                                          />
+                                                          <Select
+                                                            value={
+                                                              variant.discountType
+                                                            }
+                                                            onValueChange={(
+                                                              value:
+                                                                | 'Flat'
+                                                                | '% Off'
+                                                            ) =>
+                                                              updateVariant(
+                                                                product.id,
+                                                                variant.id,
+                                                                'discountType',
+                                                                value
+                                                              )
+                                                            }
+                                                          >
+                                                            <SelectTrigger className="w-[100px] sm:w-[120px] bg-transparent border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300">
+                                                              <SelectValue placeholder="Discount type" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                              <SelectItem value="Flat">
+                                                                Flat
+                                                              </SelectItem>
+                                                              <SelectItem value="% Off">
+                                                                % Off
+                                                              </SelectItem>
+                                                            </SelectContent>
+                                                          </Select>
+                                                          <Button
+                                                            variant="ghost"
+                                                            size="icon"
+                                                            onClick={() =>
+                                                              removeVariant(
+                                                                product.id,
+                                                                variant.id
+                                                              )
+                                                            }
+                                                            className="hover:bg-red-100 hover:text-red-600 dark:hover:bg-red-900 dark:hover:text-red-400 transition-colors duration-300"
+                                                          >
+                                                            <X className="h-4 w-4" />
+                                                          </Button>
+                                                        </div>
                                                       </div>
                                                     </motion.div>
                                                   </div>
@@ -595,27 +604,27 @@ export default function ProductList() {
           <Button
             onClick={() => setShowProductModal(true)}
             variant="outline"
-            className="border-2 border-[#008060] text-[#008060] hover:bg-[#e6f3f0] hover:text-[#00533f] rounded-md px-6 py-2 text-sm font-medium transition-colors duration-200"
+            className="border-2 border-[#008060] text-[#008060] hover:bg-[#e6f3f0] hover:text-[#00533f] dark:border-[#00a67d] dark:text-[#00a67d] dark:hover:bg-[#004d3d] dark:hover:text-[#00c795] rounded-md px-4 sm:px-6 py-2 text-sm font-medium transition-colors duration-200"
           >
             Add Product
           </Button>
         </motion.div>
       </CardFooter>
       <Dialog open={showProductModal} onOpenChange={setShowProductModal}>
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-[500px] w-[95vw] max-w-[95vw] sm:w-full bg-white dark:bg-gray-800">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent">
+            <DialogTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent">
               Select Products
             </DialogTitle>
           </DialogHeader>
-          <div className="grid gap-6 py-6">
+          <div className="grid gap-4 sm:gap-6 py-4 sm:py-6">
             <Input
               placeholder="Search product"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full border-b-2 border-[#008060] focus:border-[#00533f] transition-colors duration-300"
+              className="w-full border-b-2 border-[#008060] focus:border-[#00533f] dark:border-[#00a67d] dark:focus:border-[#00c795] transition-colors duration-300"
             />
-            <div className="max-h-[400px] overflow-y-auto pr-2 space-y-4">
+            <div className="max-h-[300px] sm:max-h-[400px] overflow-y-auto pr-2 space-y-3 sm:space-y-4">
               <AnimatePresence>
                 {availableProducts
                   .filter((product) =>
@@ -630,9 +639,9 @@ export default function ProductList() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -20 }}
                       transition={{ duration: 0.2 }}
-                      className="py-3 border-b border-gray-200 last:border-b-0 hover:bg-gray-50 transition-colors duration-200"
+                      className="py-2 sm:py-3 border-b border-gray-200 dark:border-gray-700 last:border-b-0 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200"
                     >
-                      <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-2 sm:space-x-4">
                         <Checkbox
                           id={`product-${product.id}`}
                           checked={
@@ -647,17 +656,17 @@ export default function ProductList() {
                         <img
                           src={product.image.src}
                           alt={product.title}
-                          className="w-12 h-12 object-cover rounded-md shadow-sm"
+                          className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-md shadow-sm"
                         />
                         <label
                           htmlFor={`product-${product.id}`}
-                          className="text-sm font-medium leading-none cursor-pointer hover:text-[#008060] transition-colors duration-200"
+                          className="text-xs sm:text-sm font-medium leading-none cursor-pointer hover:text-[#008060] dark:hover:text-[#00a67d] transition-colors duration-200"
                         >
                           {product.title}
                         </label>
                       </div>
                       {product.variants.length > 0 && (
-                        <div className="pl-10 mt-2 space-y-2">
+                        <div className="pl-8 sm:pl-10 mt-2 space-y-1 sm:space-y-2">
                           {product.variants.map((variant) => (
                             <div
                               key={variant.id}
@@ -680,7 +689,7 @@ export default function ProductList() {
                               />
                               <label
                                 htmlFor={`variant-${variant.id}`}
-                                className="text-sm leading-none cursor-pointer hover:text-[#008060] transition-colors duration-200"
+                                className="text-xs sm:text-sm leading-none cursor-pointer hover:text-[#008060] dark:hover:text-[#00a67d] transition-colors duration-200"
                               >
                                 {variant.title} - ${variant.price}
                               </label>
@@ -693,15 +702,15 @@ export default function ProductList() {
               </AnimatePresence>
             </div>
           </div>
-          <div className="flex justify-between items-center pt-4 border-t border-gray-200">
-            <span className="text-sm font-medium text-gray-600">
+          <div className="flex flex-col sm:flex-row justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
+            <span className="text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 mb-2 sm:mb-0">
               {Object.keys(selectedItems).length} product(s) selected
             </span>
-            <div className="flex space-x-4">
+            <div className="flex space-x-2 sm:space-x-4">
               <Button
                 variant="outline"
                 onClick={() => setShowProductModal(false)}
-                className="px-4 py-2 hover:bg-gray-100 transition-colors duration-200"
+                className="px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
               >
                 Cancel
               </Button>
@@ -710,7 +719,7 @@ export default function ProductList() {
                 whileTap={{ scale: 0.95 }}
               >
                 <Button
-                  className="bg-gradient-to-r from-[#008060] to-[#00533f] hover:from-[#00533f] hover:to-[#008060] text-white px-6 py-2 rounded-md transition-all duration-300"
+                  className="bg-gradient-to-r from-[#008060] to-[#00533f] hover:from-[#00533f] hover:to-[#008060] dark:from-[#00a67d] dark:to-[#008060] dark:hover:from-[#008060] dark:hover:to-[#00a67d] text-white px-4 sm:px-6 py-1 sm:py-2 rounded-md transition-all duration-300 text-xs sm:text-sm"
                   onClick={handleAddProducts}
                 >
                   Add Selected
