@@ -1,4 +1,3 @@
-import React, { useEffect, useRef, useCallback, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -8,17 +7,18 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { useDebounce } from '@/hooks/debounce';
+import { DialogDescription } from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
+import React, { useCallback, useEffect, useMemo } from 'react';
+import { useInView } from 'react-intersection-observer';
+import { Product } from './ProductList';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from './ui/tooltip';
-import { Product } from './ProductList';
-import { DialogDescription } from '@radix-ui/react-dialog';
-import { useDebounce } from '@/hooks/debounce';
-import { useInView } from 'react-intersection-observer';
 
 interface ProductPickerProps {
   showProductModal: boolean;
