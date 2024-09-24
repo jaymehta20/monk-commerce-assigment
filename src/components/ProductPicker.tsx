@@ -18,6 +18,7 @@ import {
 import { Product } from './ProductList';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { useDebounce } from '@/hooks/debounce';
+import { useInView } from 'react-intersection-observer';
 
 interface ProductPickerProps {
   showProductModal: boolean;
@@ -56,49 +57,19 @@ const ProductPicker: React.FC<ProductPickerProps> = ({
   isFetchingNextPage,
   error,
 }) => {
-  const observerTarget = useRef<HTMLDivElement>(null);
   const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-  const handleObserver = useCallback(
-    (entries: IntersectionObserverEntry[]) => {
-      const [target] = entries;
-      console.log('Observer triggered:', target.isIntersecting); // Debug log
-      if (
-        target.isIntersecting &&
-        hasNextPage &&
-        !isLoading &&
-        !isFetchingNextPage
-      ) {
-        console.log('Fetching next page...'); // Debug log
-        fetchNextPage();
-      }
-    },
-    [fetchNextPage, hasNextPage, isLoading, isFetchingNextPage]
-  );
+  const { ref: observerTarget, inView } = useInView({
+    root: null,
+    rootMargin: '100px',
+    threshold: 0,
+  });
 
   useEffect(() => {
-    const option = {
-      root: null,
-      rootMargin: '100px',
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver(handleObserver, option);
-
-    if (observerTarget.current) {
-      observer.observe(observerTarget.current);
-      console.log('Observer set up on:', observerTarget.current); // Debug log
-    } else {
-      console.log('Observer target is null'); // Debug log
+    if (inView && hasNextPage && !isLoading && !isFetchingNextPage) {
+      fetchNextPage();
     }
-
-    return () => {
-      if (observerTarget.current) {
-        observer.unobserve(observerTarget.current);
-        console.log('Observer cleaned up'); // Debug log
-      }
-    };
-  }, [handleObserver]);
+  }, [inView, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage]);
 
   const filteredProducts = useMemo(() => {
     return availableProducts.filter((product: Product) =>
@@ -237,14 +208,13 @@ const ProductPicker: React.FC<ProductPickerProps> = ({
               </AnimatePresence>
             )}
             {hasNextPage && (
-              <div
-                ref={observerTarget}
-                className="py-4 flex items-center justify-center bg-gray-200"
-              >
+              <div className="py-4 flex items-center justify-center">
                 {isFetchingNextPage && (
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#008060]"></div>
                 )}
-                <p className="ml-2">Loading more...</p>
+                <p className="ml-2" ref={observerTarget}>
+                  Loading more...
+                </p>
               </div>
             )}
           </div>
