@@ -23,7 +23,7 @@ const ThemeToggle = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <motion.button
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.075 }}
           whileTap={{ scale: 0.9 }}
           className="p-2 rounded-md flex items-center border"
         >
@@ -70,16 +70,16 @@ const App = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="container mx-auto my-10 space-y-10 px-4 sm:px-6 lg:px-8"
+        className="container mx-auto my-10 px-4 sm:px-6 lg:px-8"
       >
-        <header className="flex justify-between items-center">
+        <header className="flex justify-between items-center mb-10">
           <motion.h1
             initial={{ x: -20 }}
             animate={{ x: 0 }}
-            className="text-3xl font-bold inline-flex items-center gap-3"
+            className="text-2xl font-medium inline-flex items-center gap-2"
           >
-            <img src={Logo} alt="Monk Commerce" className="w-12 h-12" />
-            <span className="">Monk Commerce</span>
+            <img src={Logo} alt="Monk Commerce" className="size-8 rounded-md" />
+            <span className="text-zinc-500">Monk Upsell & Cross-sell</span>
           </motion.h1>
           <ThemeToggle />
         </header>

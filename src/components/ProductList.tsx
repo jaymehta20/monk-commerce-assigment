@@ -224,13 +224,13 @@ export default function ProductList() {
   };
 
   return (
-    <Card className="space-y-6 mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-xl">
+    <Card className="space-y-2 dark:bg-dark">
       <CardHeader>
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl font-bold mb-8 text-gray-800 dark:text-gray-200 bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent"
+          className="text-3xl font-semibold mb-4 text-gray-800 dark:text-gray-200 bg-gradient-to-r from-[#008060] to-[#00533f] bg-clip-text text-transparent"
         >
           Add Products
         </motion.h1>
