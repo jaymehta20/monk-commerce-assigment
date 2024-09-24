@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Laptop, Moon, Sun } from 'lucide-react';
 import { ThemeProvider, useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import Logo from '../public/logo.svg';
+import Logo from '/logo.svg';
 import ProductList from './components/ProductList';
 
 const ThemeToggle = () => {

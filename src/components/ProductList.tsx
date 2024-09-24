@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import AddProductButton from './AddProductButton';
 import ProductPicker from './ProductPicker';
-import { availableProducts } from '@/lib/data';
+import { useProductList } from '@/hooks/existing-product-list';
 
 interface Variant {
   id: number;
@@ -53,6 +53,18 @@ export default function ProductList() {
   const [selectedItems, setSelectedItems] = useState<{
     [key: number]: number[];
   }>({});
+
+  const {
+    data: availableProductsData,
+    isLoading,
+    isFetchingNextPage,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  } = useProductList();
+
+  const availableProducts =
+    availableProductsData?.pages.flatMap((page) => page) || [];
 
   useEffect(() => {
     // Initialize selectedItems with currently added products and variants
@@ -115,15 +127,25 @@ export default function ProductList() {
           );
           existingProduct.variants = [
             ...existingProduct.variants,
-            ...newVariants,
+            ...newVariants.map((variant) => ({
+              ...variant,
+              discount: 0,
+              discountType: 'Flat' as const,
+            })),
           ];
         } else {
           // Add new product with selected variants
           updatedProducts.push({
             ...selectedProduct,
-            variants: selectedProduct.variants.filter((variant) =>
-              variantIds.includes(variant.id)
-            ),
+            discount: 0,
+            discountType: 'Flat' as const,
+            variants: selectedProduct.variants
+              .filter((variant) => variantIds.includes(variant.id))
+              .map((variant) => ({
+                ...variant,
+                discount: 0,
+                discountType: 'Flat' as const,
+              })),
           });
         }
       });
@@ -548,6 +570,11 @@ export default function ProductList() {
         showProductModal={showProductModal}
         toggleProductSelection={toggleProductSelection}
         toggleVariantSelection={toggleVariantSelection}
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+        isLoading={isLoading}
+        isFetchingNextPage={isFetchingNextPage}
+        error={error}
       />
     </Card>
   );
