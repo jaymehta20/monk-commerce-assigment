@@ -112,11 +112,15 @@ const ProductPicker: React.FC<ProductPickerProps> = ({
               onCheckedChange={() => toggleProductSelection(product)}
             />
           )}
-          <img
-            src={product.image.src}
-            alt={product.title}
-            className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-md shadow-sm"
-          />
+          {product.image.src ? (
+            <img
+              src={product.image.src}
+              alt={product.title}
+              className="w-10 h-10 sm:w-12 sm:h-12 object-cover rounded-md shadow-sm"
+            />
+          ) : (
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gray-200 dark:bg-gray-700 rounded-md shadow-sm"></div>
+          )}
           <label
             htmlFor={`product-${product.id}`}
             className="text-xs sm:text-sm font-medium leading-none cursor-pointer hover:text-[#008060] dark:hover:text-[#00a67d] transition-colors duration-200"
